@@ -80,11 +80,17 @@ public class RentalOffice {
     }
 
     public void printClientList(){
-        clientList.stream().forEach(a-> System.out.println(a));
+
+        clientList
+                .stream()
+                .forEach(a-> System.out.println(a));
     }
 
     public void printBikeList(){
-        bikeList.stream().forEach(a-> System.out.println(a));
+
+        bikeList
+                .stream()
+                .forEach(a-> System.out.println(a));
     }
 
     public void rentBike(Rent rent){
