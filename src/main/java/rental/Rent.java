@@ -2,15 +2,18 @@ package rental;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
+
 
 import java.util.Date;
 @Getter
 @AllArgsConstructor
+@Setter
 
 public class Rent {
-    private Client clientBorrowBike;
-    private Bike BorrowedBike;
-    private int IdBorrowedBike; // ID wypozyczenia
+    private Client borrower;
+    private Bike borrowedBike;
+    //private int borrowId; // ID wypozyczenia
     private Date dateStart;
     private Date dateEnd;
 }

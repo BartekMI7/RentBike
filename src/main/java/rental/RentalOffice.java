@@ -126,7 +126,8 @@ public class RentalOffice {
         }
 
         rent.setDateEnd(endDate);
-
-
     }
+
+
+
 }

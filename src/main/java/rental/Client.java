@@ -12,7 +12,7 @@ public class Client {
     private String IdNumber;
 
     public String toString(){
-        return firstName+" "+lastName+" "+IdNumber;
+        return firstName+ " " +lastName+ " " +IdNumber;
     }
 
 }

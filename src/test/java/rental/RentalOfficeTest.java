@@ -2,11 +2,18 @@ package rental;
 
 import org.junit.Test;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import static org.junit.Assert.*;
 
 public class RentalOfficeTest {
+    String pattern = "yyyy-MM-dd";
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+
     @Test
     public void addClientToClientListTest(){
         //given
@@ -176,6 +183,58 @@ public class RentalOfficeTest {
         //when
         //then
         rentalOffice.printBikeList();
+    }
+
+    @Test
+    public void rentBikeTest() throws ParseException {
+        //given
+        RentalOffice rentalOffice = new RentalOffice();
+        Bike bike1 = new Bike("1", 2016);
+        Bike bike2 = new Bike("2", 2016);
+        Bike bike3 = new Bike("3", 2016);
+        rentalOffice.addBikeToBikeList(bike1);
+        rentalOffice.addBikeToBikeList(bike2);
+        rentalOffice.addBikeToBikeList(bike3);
+        Client client1 = new Client("Jan", "Kowalski", "ABC123456");
+        Client client2 = new Client("Andrzej", "Paz", "EFG345678");
+        Client client3 = new Client("Jan", "Nowak", "HJK234567");
+        rentalOffice.addClientToClientList(client1);
+        rentalOffice.addClientToClientList(client2);
+        rentalOffice.addClientToClientList(client3);
+        Date startDate = simpleDateFormat.parse("2019-10-26");
+
+        //when
+        //then
+        rentalOffice.rentBike("3","ABC123456",startDate);
+
+
+    }
+
+    @Test
+    public void giveBackBikeTest() throws ParseException {
+        //given
+        RentalOffice rentalOffice = new RentalOffice();
+        Bike bike1 = new Bike("1", 2016);
+        Bike bike2 = new Bike("2", 2016);
+        Bike bike3 = new Bike("3", 2016);
+        rentalOffice.addBikeToBikeList(bike1);
+        rentalOffice.addBikeToBikeList(bike2);
+        rentalOffice.addBikeToBikeList(bike3);
+        Client client1 = new Client("Jan", "Kowalski", "ABC123456");
+        Client client2 = new Client("Andrzej", "Paz", "EFG345678");
+        Client client3 = new Client("Jan", "Nowak", "HJK234567");
+        rentalOffice.addClientToClientList(client1);
+        rentalOffice.addClientToClientList(client2);
+        rentalOffice.addClientToClientList(client3);
+        Date startDate = simpleDateFormat.parse("2019-10-22");
+        rentalOffice.rentBike("3","ABC123456",startDate);
+
+        //when
+
+        Date endDate = simpleDateFormat.parse("2019-10-26");
+        //then
+        rentalOffice.giveBackBike("3",endDate);
+
     }
 
 }
