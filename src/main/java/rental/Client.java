@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 @Getter
 @AllArgsConstructor
 @Setter
@@ -11,15 +14,24 @@ import lombok.Setter;
 public class Client {
     private String firstName;
     private String lastName;
-    private String IdNumber;
-    private double saldoClient;
+    private String idNumber;
+    private BigDecimal saldoClient;
 
-    public String toString(){
-        return firstName+ " " +lastName+ " " +IdNumber;
+    public Client(String firstName, String lastName, String idNumber){
+        this.firstName=firstName;
+        this.lastName=lastName;
+        this.idNumber=idNumber;
     }
 
-    public void topUpAccount(double moneyAmount){
-        setSaldoClient(getSaldoClient()+moneyAmount);
+    public String toString(){
+        return firstName+ " " +lastName+ " " +idNumber;
+    }
+
+    public void topUpAccount(BigDecimal moneyAmount){
+        setSaldoClient(getSaldoClient().add(moneyAmount));
+
+
+
     }
 
 }
