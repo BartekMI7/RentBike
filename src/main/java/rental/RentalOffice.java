@@ -91,8 +91,13 @@ public class RentalOffice {
                 .stream()
                 .forEach(a-> System.out.println(a));
     }
+    public void printRentList(){
+        rentedBikeList
+                .stream()
+                .forEach(a-> System.out.println(a));
+    }
 
-    public void rentBike(String idBike, String idClient, Date startDate){
+    public void rentBike(String idBike, String idClient, Date startDate){ //saldo w obiekcie klienta i uwzglednienie w przypadku wypozyczenia
         Bike bike1 = bikeList
                 .stream()
                 .filter(a -> a.getIdBikeNr().equals(idBike))
@@ -114,7 +119,7 @@ public class RentalOffice {
         rentedBikeList.add(rent);
     }
 
-    public void giveBackBike(String idBike, Date endDate){
+    public void giveBackBike(String idBike, Date endDate){ // dodac naliczanie oplat za minute wypozyczenia
 
         Rent rent = rentedBikeList
                 .stream()
@@ -127,7 +132,5 @@ public class RentalOffice {
 
         rent.setDateEnd(endDate);
     }
-
-
 
 }

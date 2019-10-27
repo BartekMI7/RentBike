@@ -16,4 +16,8 @@ public class Rent {
     //private int borrowId; // ID wypozyczenia
     private Date dateStart;
     private Date dateEnd;
+
+    public String toString(){
+        return "BIKE ID: "+borrowedBike.getIdBikeNr()+" CLIENT: "+ borrower+" BORROW DATE: "+dateStart;
+    }
 }
