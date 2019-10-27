@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,6 +20,8 @@ public class RentalOffice {
     private final List<Bike> bikeList = new ArrayList<>();
     private final List<Client> clientList = new ArrayList<>();
     private final List<Rent> rentedBikeList = new ArrayList<>();
+
+    SimpleDateFormat format = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
 
     //public RentalOffice(ArrayList<Client> clientList) {
     //}
@@ -80,57 +85,140 @@ public class RentalOffice {
         }
     }
 
-    public void printClientList(){
+    public void printClientList() {
         clientList
                 .stream()
-                .forEach(a-> System.out.println(a));
+                .forEach(a -> System.out.println(a));
     }
 
-    public void printBikeList(){
+    public void printBikeList() {
         bikeList
                 .stream()
-                .forEach(a-> System.out.println(a));
-    }
-    public void printRentList(){
-        rentedBikeList
-                .stream()
-                .forEach(a-> System.out.println(a));
+                .forEach(a -> System.out.println(a));
     }
 
-    public void rentBike(String idBike, String idClient, Date startDate){ //saldo w obiekcie klienta i uwzglednienie w przypadku wypozyczenia
+    public void printRentList() {
+        rentedBikeList
+                .stream()
+                .forEach(a -> System.out.println(a));
+    }
+    public void printActualRentList(){
+        rentedBikeList
+                .stream()
+                .filter(a->a.getDateEnd()==null)
+                .forEach(a -> System.out.println(a));
+    }
+
+
+    public void rentBike(String idBike, String idClient, Date startDate) { //saldo w obiekcie klienta i uwzglednienie w przypadku wypozyczenia
+
         Bike bike1 = bikeList
                 .stream()
                 .filter(a -> a.getIdBikeNr().equals(idBike))
                 .findAny()
                 .orElse(null);
-        if (bike1==null){
+        if (bike1 == null) {
             throw new IllegalArgumentException("Bike with this ID doesn't exist or is just rented!");
         }
 
         Client client1 = clientList
                 .stream()
-                .filter(a->a.getIdNumber().equals(idClient))
+                .filter(a -> a.getIdNumber().equals(idClient))
                 .findAny().orElse(null);
-        if (client1==null){
+        if (client1 == null) {
             throw new IllegalArgumentException("Client doesn't exist in the actual client list!");
         }
 
-        Rent rent = new Rent(client1,bike1,startDate,null);
+        Rent rent = new Rent(client1, bike1, startDate, null);
         rentedBikeList.add(rent);
     }
+/*
+    public void rentBikeByOneClient(String idBike, String idClient, Date startDate) { //saldo w obiekcie klienta i uwzglednienie w przypadku wypozyczenia
 
-    public void giveBackBike(String idBike, Date endDate){ // dodac naliczanie oplat za minute wypozyczenia
+        Bike bike1 = bikeList
+                .stream()
+                .filter(a -> a.getIdBikeNr().equals(idBike))
+                .findAny()
+                .orElse(null);
+        if (bike1 == null) {
+            throw new IllegalArgumentException("Bike with this ID doesn't exist or is just rented!");
+        }
+
+        Client client1 = clientList
+                .stream()
+                .filter(a -> a.getIdNumber().equals(idClient))
+                .findAny().orElse(null);
+        if (client1 == null) {
+            throw new IllegalArgumentException("Client doesn't exist in the actual client list!");
+        }
+
+
+        if (rentedBikeList.contains(client1.getIdNumber()) && rent.getDateEnd()==null){
+            throw new IllegalArgumentException("This client already rented a bike");
+        }
+        else {
+        Rent rent = new Rent(client1, bike1, startDate, null);
+        rentedBikeList.add(rent);
+        }
+    }
+
+ */
+
+    public void giveBackBike(String idBike, Date endDate) {
 
         Rent rent = rentedBikeList
                 .stream()
                 .filter(a -> a.getBorrowedBike().getIdBikeNr().equals(idBike))
                 .findAny()
                 .orElse(null);
-        if (rent==null){
+        if (rent == null) {
             throw new IllegalArgumentException("This rent is not exist!");
         }
 
         rent.setDateEnd(endDate);
+    }
+
+
+    public void rentBikeIfSaldoOk(String idBike, String idClient, Date startDate) {
+        Bike bike1 = bikeList
+                .stream()
+                .filter(a -> a.getIdBikeNr().equals(idBike))
+                .findAny()
+                .orElse(null);
+        if (bike1 == null) {
+            throw new IllegalArgumentException("Bike with this ID doesn't exist or is just rented!");
+        }
+
+        Client client1 = clientList
+                .stream()
+                .filter(a -> a.getIdNumber().equals(idClient))
+                .findAny()
+                .orElse(null);
+        if (client1 == null) {
+            throw new IllegalArgumentException("Client doesn't exist in the actual client list!");
+        }
+        if (client1.getSaldoClient() > 10) {
+            Rent rent = new Rent(client1, bike1, startDate, null);
+            rentedBikeList.add(rent);
+        } else {
+            throw new IllegalArgumentException("Not enough money on your account: " + client1.getSaldoClient() + ". Please top up your account! Min saldo is 10 zl.");
+        }
+    }
+
+    public void giveBackBikeWithPayment(String idBike, Date endDate) {
+        Rent rent = rentedBikeList
+                .stream()
+                .filter(a -> a.getBorrowedBike().getIdBikeNr().equals(idBike))
+                .findAny()
+                .orElse(null);
+        if (rent == null) {
+            throw new IllegalArgumentException("Bike with this ID doesn't exist or is just rented!");
+        }
+        rent.setDateEnd(endDate);
+        if(rent.differenceDate()>15){
+            rent.getBorrower().setSaldoClient((rent.getBorrower().getSaldoClient())-(rent.differenceDate()-15)*0.1); // każd minuta powyzej 15min kosztuje 10groszy.
+        }
+
     }
 
 }

@@ -8,11 +8,13 @@ import lombok.Getter;
 
 public class Bike {
 
-    private String IdBikeNr;
-    private int DateOfProduction;
+    private String idBikeNr;
+    private int dateOfProduction;
+
+
 
     public String toString(){
-        return "Bike ID: "+IdBikeNr+" Year: "+DateOfProduction;
+        return "Bike ID: "+idBikeNr+" Year: "+dateOfProduction;
     }
 
 }
