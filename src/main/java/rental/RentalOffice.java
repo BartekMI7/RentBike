@@ -132,7 +132,7 @@ public class RentalOffice {
         Rent rent = new Rent(client1, bike1, startDate, null);
         rentedBikeList.add(rent);
     }
-/*
+
     public void rentBikeByOneClient(String idBike, String idClient, Date startDate) { //saldo w obiekcie klienta i uwzglednienie w przypadku wypozyczenia
 
         Bike bike1 = bikeList
@@ -151,18 +151,22 @@ public class RentalOffice {
         if (client1 == null) {
             throw new IllegalArgumentException("Client doesn't exist in the actual client list!");
         }
-
-
-        if (rentedBikeList.contains(client1.getIdNumber()) && rent.getDateEnd()==null){
-            throw new IllegalArgumentException("This client already rented a bike");
+        Rent rent1 = rentedBikeList
+                .stream()
+                .filter(a -> a.getBorrower().getIdNumber().equals(idClient))
+                .filter(a -> a.getDateEnd() == null)
+                .findAny()
+                .orElse(null);
+        if (rent1 == null) {
+            Rent rent = new Rent(client1, bike1, startDate, null);
+            rentedBikeList.add(rent);
         }
         else {
-        Rent rent = new Rent(client1, bike1, startDate, null);
-        rentedBikeList.add(rent);
+            throw new IllegalArgumentException("Client has already 1 borrowed a bike");
         }
     }
 
- */
+
 
     public void giveBackBike(String idBike, Date endDate) {
 

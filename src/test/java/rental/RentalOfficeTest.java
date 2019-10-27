@@ -370,4 +370,31 @@ public class RentalOfficeTest {
 
     }
 
+    @Test
+    public void rentBikeByOneClientTest() throws ParseException {
+        //given
+        RentalOffice rentalOffice = new RentalOffice();
+        Bike bike1 = new Bike("1", 2016);
+        Bike bike2 = new Bike("2", 2016);
+        Bike bike3 = new Bike("3", 2016);
+        rentalOffice.addBikeToBikeList(bike1);
+        rentalOffice.addBikeToBikeList(bike2);
+        rentalOffice.addBikeToBikeList(bike3);
+        Client client1 = new Client("Jan", "Kowalski", "ABC123456", 25.20);
+        Client client2 = new Client("Andrzej", "Paz", "EFG345678", 15.10);
+        Client client3 = new Client("Jan", "Nowak", "HJK234567", 18.45);
+        rentalOffice.addClientToClientList(client1);
+        rentalOffice.addClientToClientList(client2);
+        rentalOffice.addClientToClientList(client3);
+        Date startDate = simpleDateFormat.parse("2019-10-22 18:23:34");
+        Date startDate2 = simpleDateFormat.parse("2019-10-22 18:25:34");
+        //when
+        rentalOffice.rentBikeByOneClient("1","ABC123456",startDate);
+        rentalOffice.rentBikeByOneClient("2","ABC123456",startDate2);
+
+
+
+
+    }
+
 }
