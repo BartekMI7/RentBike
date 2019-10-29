@@ -102,13 +102,13 @@ public class RentalOffice {
                 .stream()
                 .forEach(a -> System.out.println(a));
     }
-    public void printActualRentList(){
+
+    public void printActualRentList() {
         rentedBikeList
                 .stream()
-                .filter(a->a.getDateEnd()==null)
+                .filter(a -> a.getDateEnd() == null)
                 .forEach(a -> System.out.println(a));
     }
-
 
     public void rentBike(String idBike, String idClient, Date startDate) { //saldo w obiekcie klienta i uwzglednienie w przypadku wypozyczenia
 
@@ -160,12 +160,10 @@ public class RentalOffice {
         if (rent1 == null) {
             Rent rent = new Rent(client1, bike1, startDate, null);
             rentedBikeList.add(rent);
-        }
-        else {
+        } else {
             throw new IllegalArgumentException("Client has already 1 borrowed a bike");
         }
     }
-
 
 
     public void giveBackBike(String idBike, Date endDate) {
@@ -219,10 +217,28 @@ public class RentalOffice {
             throw new IllegalArgumentException("Bike with this ID doesn't exist or is just rented!");
         }
         rent.setDateEnd(endDate);
-        if(rent.differenceDate()>15){
-            rent.getBorrower().setSaldoClient((rent.getBorrower().getSaldoClient())-(rent.differenceDate()-15)*0.1); // każd minuta powyzej 15min kosztuje 10groszy.
+        if (rent.differenceDateMinute() > 15) {
+            rent.getBorrower().setSaldoClient((rent.getBorrower().getSaldoClient()) - (rent.differenceDateMinute() - 15) * 0.1); // każd minuta powyzej 15min kosztuje 10groszy.
         }
 
     }
+
+    public void topUpAccount(String idClient, double money) { //doladowanie konta
+        Client client = clientList
+                .stream()
+                .filter(a -> idClient.equals(a.getIdNumber()))
+                .findAny()
+                .orElse(null);
+        if (client==null){
+            throw new IllegalArgumentException("Client does't exist. To top up account please first add client to the client list");
+        }
+        client.setSaldoClient(client.getSaldoClient()+money);
+    }
+
+    public double getProfits() {
+
+        return 2;
+    }
+
 
 }

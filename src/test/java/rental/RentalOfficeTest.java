@@ -1,5 +1,6 @@
 package rental;
 
+import lombok.ToString;
 import org.junit.Test;
 
 import java.text.ParseException;
@@ -254,8 +255,11 @@ public class RentalOfficeTest {
         rentalOffice.addClientToClientList(client3);
         Date startDate1 = simpleDateFormat.parse("2019-10-22 10:30:23");
         Date startDate2 = simpleDateFormat.parse("2019-10-22 11:24:23");
+        Date endDate = simpleDateFormat.parse("2019-10-23 11:44:13");
         rentalOffice.rentBike("3", "ABC123456", startDate1);
         rentalOffice.rentBike("2", "EFG345678", startDate2);
+        rentalOffice.rentBike("1", "HJK234567", startDate2);
+        rentalOffice.giveBackBike("3",endDate);
         //when
         //then
         rentalOffice.printRentList();
@@ -284,11 +288,10 @@ public class RentalOfficeTest {
         rentalOffice.rentBike("1", "ABC123456", startDate1);
         rentalOffice.rentBike("2", "EFG345678", startDate2);
         rentalOffice.rentBike("3", "HJK234567", startDate2);
-        rentalOffice.giveBackBike("1",endDate);
+        rentalOffice.giveBackBike("1", endDate);
         //when
         //then
         rentalOffice.printActualRentList();
-
 
 
     }
@@ -362,8 +365,8 @@ public class RentalOfficeTest {
         rentalOffice.rentBikeIfSaldoOk("1", "ABC123456", startDate);
         rentalOffice.rentBikeIfSaldoOk("2", "EFG345678", startDate);
         rentalOffice.rentBikeIfSaldoOk("3", "HJK234567", startDate);
-        rentalOffice.giveBackBikeWithPayment("1",endDate1);
-        rentalOffice.giveBackBikeWithPayment("2",endDate2);
+        rentalOffice.giveBackBikeWithPayment("1", endDate1);
+        rentalOffice.giveBackBikeWithPayment("2", endDate2);
 
         System.out.println(client1.getSaldoClient());
         System.out.println(client2.getSaldoClient());
@@ -389,12 +392,55 @@ public class RentalOfficeTest {
         Date startDate = simpleDateFormat.parse("2019-10-22 18:23:34");
         Date startDate2 = simpleDateFormat.parse("2019-10-22 18:25:34");
         //when
-        rentalOffice.rentBikeByOneClient("1","ABC123456",startDate);
-        rentalOffice.rentBikeByOneClient("2","ABC123456",startDate2);
+        rentalOffice.rentBikeByOneClient("1", "ABC123456", startDate);
+        rentalOffice.rentBikeByOneClient("2", "HJK234567", startDate2);
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void rentBikeByOneClientTestException() throws ParseException {
+        //given
+        RentalOffice rentalOffice = new RentalOffice();
+        Bike bike1 = new Bike("1", 2016);
+        Bike bike2 = new Bike("2", 2016);
+        Bike bike3 = new Bike("3", 2016);
+        rentalOffice.addBikeToBikeList(bike1);
+        rentalOffice.addBikeToBikeList(bike2);
+        rentalOffice.addBikeToBikeList(bike3);
+        Client client1 = new Client("Jan", "Kowalski", "ABC123456", 25.20);
+        Client client2 = new Client("Andrzej", "Paz", "EFG345678", 15.10);
+        Client client3 = new Client("Jan", "Nowak", "HJK234567", 18.45);
+
+        rentalOffice.addClientToClientList(client1);
+        rentalOffice.addClientToClientList(client2);
+        rentalOffice.addClientToClientList(client3);
+
+        Date startDate = simpleDateFormat.parse("2019-10-22 18:23:34");
+        Date startDate2 = simpleDateFormat.parse("2019-10-22 18:25:34");
+        //when
+        rentalOffice.rentBikeByOneClient("1", "ABC123456", startDate);
+        rentalOffice.rentBikeByOneClient("2", "ABC123456", startDate2);
 
 
+    }
 
-
+    @Test
+    public void topUpAccountTest(){
+        //given
+        RentalOffice rentalOffice = new RentalOffice();
+        Client client1 = new Client("Jan", "Kowalski", "ABC123456",25.20);
+        Client client2 = new Client("Andrzej", "Paz", "EFG345678", 15.10);
+        Client client3 = new Client("Jan", "Nowak", "HJK234567", 18.45);
+        rentalOffice.addClientToClientList(client1);
+        rentalOffice.addClientToClientList(client2);
+        rentalOffice.addClientToClientList(client3);
+        //when
+        rentalOffice.topUpAccount("ABC123456",10.4);
+        rentalOffice.topUpAccount("EFG345678",12.0);
+        rentalOffice.topUpAccount("HJK234567",5.0);
+        //then
+        assertEquals(Double.valueOf(35.6),Double.valueOf(client1.getSaldoClient()));
+        assertEquals(Double.valueOf(27.10),Double.valueOf(client2.getSaldoClient()));
+        assertEquals(Double.valueOf(23.45),Double.valueOf(client3.getSaldoClient()));
     }
 
 }

@@ -29,15 +29,9 @@ public class Client {
         return firstName+ " " +lastName+ " " +idNumber;
     }
 
-    public void topUpAccount(double moneyAmount){
-        setSaldoClient(getSaldoClient()+moneyAmount);
-    }
+    //public void topUpAccount(double moneyAmount){   //doladowanie konta
+    //    setSaldoClient(getSaldoClient()+moneyAmount);
+    //}
 
-
-    //public void topUpAccount(BigDecimal moneyAmount){
-        //setSaldoClient(getSaldoClient().add(moneyAmount));
-        //BigDecimal a = new BigDecimal(String.valueOf(getSaldoClient()));
-        //setSaldoClient(a.round(new MathContext(4,RoundingMode.HALF_UP)));
-   // }
 
 }
