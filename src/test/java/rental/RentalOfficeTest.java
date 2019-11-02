@@ -419,8 +419,6 @@ public class RentalOfficeTest {
         //when
         rentalOffice.rentBikeByOneClient("1", "ABC123456", startDate);
         rentalOffice.rentBikeByOneClient("2", "ABC123456", startDate2);
-
-
     }
 
     @Test

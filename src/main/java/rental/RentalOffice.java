@@ -230,10 +230,12 @@ public class RentalOffice {
                 .findAny()
                 .orElse(null);
         if (client==null){
-            throw new IllegalArgumentException("Client does't exist. To top up account please first add client to the client list");
+            throw new IllegalArgumentException("Client doesn't exist. To top up account please first add client to the client list");
         }
         client.setSaldoClient(client.getSaldoClient()+money);
     }
+
+
 
     public double getProfits() {
 

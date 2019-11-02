@@ -26,7 +26,7 @@ public class Client {
     }
 
     public String toString(){
-        return firstName+ " " +lastName+ " " +idNumber;
+        return firstName+ " " +lastName+ " " +idNumber+" "+saldoClient;
     }
 
     //public void topUpAccount(double moneyAmount){   //doladowanie konta
