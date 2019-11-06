@@ -252,6 +252,14 @@ public class RentalOffice {
                 .reduce("",(tmp,a)-> tmp+=a+"\n");
     }
 
+    public String toStringActualRentList(){
+        return rentedBikeList
+                .stream()
+                .filter(a->a.getDateEnd()==null)
+                .map(a->a.toString())
+                .reduce("",(tmp,a)->tmp+=a+"\n");
+    }
+
 
 
     public void saveClientListToFile() throws FileNotFoundException {

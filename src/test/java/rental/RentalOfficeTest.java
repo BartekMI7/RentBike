@@ -484,6 +484,37 @@ public class RentalOfficeTest {
                 "Jan Nowak HJK234567 18.45\n",list1);
     }
 
+    @Test
+    public void toStringActualRentList() throws ParseException {
+        RentalOffice rentalOffice = new RentalOffice();
+        Bike bike1 = new Bike("1", 2016);
+        Bike bike2 = new Bike("2", 2016);
+        Bike bike3 = new Bike("3", 2016);
+        rentalOffice.addBikeToBikeList(bike1);
+        rentalOffice.addBikeToBikeList(bike2);
+        rentalOffice.addBikeToBikeList(bike3);
+        Client client1 = new Client("Jan", "Kowalski", "ABC123456");
+        Client client2 = new Client("Andrzej", "Paz", "EFG345678");
+        Client client3 = new Client("Jan", "Nowak", "HJK234567");
+        rentalOffice.addClientToClientList(client1);
+        rentalOffice.addClientToClientList(client2);
+        rentalOffice.addClientToClientList(client3);
+        Date startDate1 = simpleDateFormat.parse("2019-10-22 10:30:23");
+        Date startDate2 = simpleDateFormat.parse("2019-10-22 11:24:23");
+        Date endDate = simpleDateFormat.parse("2019-10-22 13:22:26");
+        rentalOffice.rentBike("1", "ABC123456", startDate1);
+        rentalOffice.rentBike("2", "EFG345678", startDate2);
+        rentalOffice.rentBike("3", "HJK234567", startDate1);
+        rentalOffice.giveBackBike("1", endDate);
+
+        String list1 = rentalOffice.toStringActualRentList();
+        //when
+        //then
+        assertEquals("BIKE ID: 2 CLIENT: Andrzej Paz EFG345678 0.0 BORROW DATE: Tue Oct 22 11:24:23 CEST 2019 DATE OF RETURN: null\n" +
+                "BIKE ID: 3 CLIENT: Jan Nowak HJK234567 0.0 BORROW DATE: Tue Oct 22 10:30:23 CEST 2019 DATE OF RETURN: null\n",list1);
+
+    }
+
 
 
 }
