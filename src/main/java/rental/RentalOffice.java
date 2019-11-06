@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Getter
@@ -229,12 +231,32 @@ public class RentalOffice {
                 .filter(a -> idClient.equals(a.getIdNumber()))
                 .findAny()
                 .orElse(null);
-        if (client==null){
+        if (client == null) {
             throw new IllegalArgumentException("Client doesn't exist. To top up account please first add client to the client list");
         }
-        client.setSaldoClient(client.getSaldoClient()+money);
+        client.setSaldoClient(client.getSaldoClient() + money);
     }
 
+    public String toStringBikeList() {
+        return bikeList
+                .stream()
+                .map(a->a.toString())
+                .reduce("", (tmp, a) -> tmp += a + "\n");
+    }
+
+    public String toStringClientList(){
+
+        return clientList
+                .stream()
+                .map(a->a.toString())
+                .reduce("",(tmp,a)-> tmp+=a+"\n");
+    }
+
+
+
+    public void saveClientListToFile() throws FileNotFoundException {
+
+    }
 
 
     public double getProfits() {

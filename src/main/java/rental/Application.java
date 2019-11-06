@@ -85,7 +85,7 @@ public class Application {
                 case "10":
                     BICYCLE_RENTAL.printActualRentList();
                     if (BICYCLE_RENTAL.getRentedBikeList()==null){
-                        System.out.println("Brak wypozczyonych rowerow");
+                        System.out.println("Brak wypozyczonych rowerow");
                     }
             }
 

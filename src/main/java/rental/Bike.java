@@ -2,9 +2,11 @@ package rental;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 
 public class Bike {
 
@@ -14,7 +16,7 @@ public class Bike {
 
 
     public String toString(){
-        return "Bike ID: "+idBikeNr+" Year: "+dateOfProduction;
+        return idBikeNr+" "+dateOfProduction;
     }
 
 }

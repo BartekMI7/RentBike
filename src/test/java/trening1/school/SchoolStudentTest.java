@@ -24,7 +24,7 @@ public class SchoolStudentTest {
     }
     @Test
     public void testConstructor2(){
-        Student givenStudent = new Student("Bartosz","3a","dfdgd");
+        Student givenStudent = new Student("Bartosz","3a","02070803628");
 
     }
 

@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -180,9 +181,12 @@ public class RentalOfficeTest {
         rentalOffice.addBikeToBikeList(bike1);
         rentalOffice.addBikeToBikeList(bike2);
         rentalOffice.addBikeToBikeList(bike3);
+        String bikeList1 = rentalOffice.toString();
+        //List<Bike> list1 = new ArrayList<>();
         //when
         //then
-        rentalOffice.printBikeList();
+        System.out.println(bikeList1);
+        //rentalOffice.printBikeList();
     }
 
     @Test
@@ -440,5 +444,46 @@ public class RentalOfficeTest {
         assertEquals(Double.valueOf(27.10),Double.valueOf(client2.getSaldoClient()));
         assertEquals(Double.valueOf(23.45),Double.valueOf(client3.getSaldoClient()));
     }
+
+    @Test
+    public void toStringBikeListTest(){
+        //given
+        RentalOffice rentalOffice = new RentalOffice();
+        Bike bike1 = new Bike("1", 2016);
+        Bike bike2 = new Bike("2", 2016);
+        Bike bike3 = new Bike("3", 2017);
+        //then
+        rentalOffice.addBikeToBikeList(bike1);
+        rentalOffice.addBikeToBikeList(bike2);
+        rentalOffice.addBikeToBikeList(bike3);
+
+        String list1 = rentalOffice.toStringBikeList();
+        //when
+        //then
+        assertEquals("1 2016\n" +
+                "2 2016\n" +
+                "3 2017\n",
+                 list1);
+    }
+
+    @Test
+    public void toStringClientListTest(){
+        //given
+        RentalOffice rentalOffice = new RentalOffice();
+        Client client1 = new Client("Jan", "Kowalski", "ABC123456",25.20);
+        Client client2 = new Client("Andrzej", "Paz", "EFG345678", 15.10);
+        Client client3 = new Client("Jan", "Nowak", "HJK234567", 18.45);
+        rentalOffice.addClientToClientList(client1);
+        rentalOffice.addClientToClientList(client2);
+        rentalOffice.addClientToClientList(client3);
+        String list1 = rentalOffice.toStringClientList();
+        //when
+        //then
+        assertEquals("Jan Kowalski ABC123456 25.2\n"+
+                "Andrzej Paz EFG345678 15.1\n"+
+                "Jan Nowak HJK234567 18.45\n",list1);
+    }
+
+
 
 }
