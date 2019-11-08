@@ -3,6 +3,7 @@ package rental;
 import lombok.ToString;
 import org.junit.Test;
 
+import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -513,6 +514,18 @@ public class RentalOfficeTest {
         assertEquals("BIKE ID: 2 CLIENT: Andrzej Paz EFG345678 0.0 BORROW DATE: Tue Oct 22 11:24:23 CEST 2019 DATE OF RETURN: null\n" +
                 "BIKE ID: 3 CLIENT: Jan Nowak HJK234567 0.0 BORROW DATE: Tue Oct 22 10:30:23 CEST 2019 DATE OF RETURN: null\n",list1);
 
+    }
+
+    @Test
+    public void saveClientListToFileTest() throws FileNotFoundException {
+        RentalOffice rentalOffice = new RentalOffice();
+        Client client1 = new Client("Jan", "Kowalski", "ABC123456");
+        Client client2 = new Client("Andrzej", "Paz", "EFG345678");
+        Client client3 = new Client("Jan", "Nowak", "HJK234567");
+        rentalOffice.addClientToClientList(client1);
+        rentalOffice.addClientToClientList(client2);
+        rentalOffice.addClientToClientList(client3);
+        rentalOffice.saveClientListToFile();
     }
 
 

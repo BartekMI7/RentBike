@@ -17,7 +17,7 @@ public class Client {
     private String lastName;
     private String idNumber;
     //private BigDecimal saldoClient;
-    private double saldoClient;
+    private double saldoClient=0;
 
     public Client(String firstName, String lastName, String idNumber){
         this.firstName=firstName;

@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -240,30 +241,45 @@ public class RentalOffice {
     public String toStringBikeList() {
         return bikeList
                 .stream()
-                .map(a->a.toString())
+                .map(a -> a.toString())
                 .reduce("", (tmp, a) -> tmp += a + "\n");
     }
 
-    public String toStringClientList(){
+    public String toStringClientList() {
 
         return clientList
                 .stream()
-                .map(a->a.toString())
-                .reduce("",(tmp,a)-> tmp+=a+"\n");
+                .map(a -> a.toString())
+                .reduce("", (tmp, a) -> tmp += a + "\n");
     }
 
-    public String toStringActualRentList(){
+    public String toStringActualRentList() {
         return rentedBikeList
                 .stream()
-                .filter(a->a.getDateEnd()==null)
-                .map(a->a.toString())
-                .reduce("",(tmp,a)->tmp+=a+"\n");
+                .filter(a -> a.getDateEnd() == null)
+                .map(a -> a.toString())
+                .reduce("", (tmp, a) -> tmp += a + "\n");
     }
-
 
 
     public void saveClientListToFile() throws FileNotFoundException {
+        PrintWriter write = new PrintWriter("all_clients.txt");
+        clientList.forEach(client -> {
+            String idClient = client.getIdNumber();
+            String lastnameClient = client.getLastName();
+            String firstnameClient = client.getFirstName();
+            double saldoClient = client.getSaldoClient();
 
+            write.print(idClient);
+            write.print("  ");
+            write.print(lastnameClient);
+            write.print("  ");
+            write.print(firstnameClient);
+            write.print("  ");
+            write.print(saldoClient);
+            write.println();
+        } );
+        write.close();
     }
 
 
