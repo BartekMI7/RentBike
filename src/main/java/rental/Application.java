@@ -2,6 +2,7 @@ package rental;
 
 import com.sun.source.tree.IfTree;
 
+import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -10,7 +11,7 @@ import java.util.Scanner;
 public class Application {
     private static final RentalOffice BICYCLE_RENTAL = new RentalOffice();
 
-    public static void main(String[] args) throws ParseException {
+    public static void main(String[] args) throws ParseException, FileNotFoundException {
         Scanner read = new Scanner(System.in);
         Scanner readDouble = new Scanner(System.in);
         String tmp;
@@ -29,6 +30,7 @@ public class Application {
             System.out.println("8 - jezeli chcesz wyswietlic liste wszystkich rowerow");
             System.out.println("9 - jezeli chcesz wyswietlic liste wszystkich klientow");
             System.out.println("10 - jezeli chcesz wyswietlic liste aktualnych wypozyczen");
+            System.out.println("11 - jezeli chcesz zapisac do pliku liste klientow");
             System.out.println("0 - jezeli chcesz zakonczyc program");
             tmp = read.nextLine();
 
@@ -87,6 +89,9 @@ public class Application {
                     if (BICYCLE_RENTAL.getRentedBikeList()==null){
                         System.out.println("Brak wypozyczonych rowerow");
                     }
+
+                case "11":
+                    BICYCLE_RENTAL.saveClientListToFile();
             }
 
             if ("0".equals(tmp)) {

@@ -264,7 +264,7 @@ public class RentalOfficeTest {
         rentalOffice.rentBike("3", "ABC123456", startDate1);
         rentalOffice.rentBike("2", "EFG345678", startDate2);
         rentalOffice.rentBike("1", "HJK234567", startDate2);
-        rentalOffice.giveBackBike("3",endDate);
+        rentalOffice.giveBackBike("3", endDate);
         //when
         //then
         rentalOffice.printRentList();
@@ -401,7 +401,7 @@ public class RentalOfficeTest {
         rentalOffice.rentBikeByOneClient("2", "HJK234567", startDate2);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void rentBikeByOneClientTestException() throws ParseException {
         //given
         RentalOffice rentalOffice = new RentalOffice();
@@ -427,27 +427,27 @@ public class RentalOfficeTest {
     }
 
     @Test
-    public void topUpAccountTest(){
+    public void topUpAccountTest() {
         //given
         RentalOffice rentalOffice = new RentalOffice();
-        Client client1 = new Client("Jan", "Kowalski", "ABC123456",25.20);
+        Client client1 = new Client("Jan", "Kowalski", "ABC123456", 25.20);
         Client client2 = new Client("Andrzej", "Paz", "EFG345678", 15.10);
         Client client3 = new Client("Jan", "Nowak", "HJK234567", 18.45);
         rentalOffice.addClientToClientList(client1);
         rentalOffice.addClientToClientList(client2);
         rentalOffice.addClientToClientList(client3);
         //when
-        rentalOffice.topUpAccount("ABC123456",10.4);
-        rentalOffice.topUpAccount("EFG345678",12.0);
-        rentalOffice.topUpAccount("HJK234567",5.0);
+        rentalOffice.topUpAccount("ABC123456", 10.4);
+        rentalOffice.topUpAccount("EFG345678", 12.0);
+        rentalOffice.topUpAccount("HJK234567", 5.0);
         //then
-        assertEquals(Double.valueOf(35.6),Double.valueOf(client1.getSaldoClient()));
-        assertEquals(Double.valueOf(27.10),Double.valueOf(client2.getSaldoClient()));
-        assertEquals(Double.valueOf(23.45),Double.valueOf(client3.getSaldoClient()));
+        assertEquals(Double.valueOf(35.6), Double.valueOf(client1.getSaldoClient()));
+        assertEquals(Double.valueOf(27.10), Double.valueOf(client2.getSaldoClient()));
+        assertEquals(Double.valueOf(23.45), Double.valueOf(client3.getSaldoClient()));
     }
 
     @Test
-    public void toStringBikeListTest(){
+    public void toStringBikeListTest() {
         //given
         RentalOffice rentalOffice = new RentalOffice();
         Bike bike1 = new Bike("1", 2016);
@@ -462,16 +462,16 @@ public class RentalOfficeTest {
         //when
         //then
         assertEquals("1 2016\n" +
-                "2 2016\n" +
-                "3 2017\n",
-                 list1);
+                        "2 2016\n" +
+                        "3 2017\n",
+                list1);
     }
 
     @Test
-    public void toStringClientListTest(){
+    public void toStringClientListTest() {
         //given
         RentalOffice rentalOffice = new RentalOffice();
-        Client client1 = new Client("Jan", "Kowalski", "ABC123456",25.20);
+        Client client1 = new Client("Jan", "Kowalski", "ABC123456", 25.20);
         Client client2 = new Client("Andrzej", "Paz", "EFG345678", 15.10);
         Client client3 = new Client("Jan", "Nowak", "HJK234567", 18.45);
         rentalOffice.addClientToClientList(client1);
@@ -480,9 +480,9 @@ public class RentalOfficeTest {
         String list1 = rentalOffice.toStringClientList();
         //when
         //then
-        assertEquals("Jan Kowalski ABC123456 25.2\n"+
-                "Andrzej Paz EFG345678 15.1\n"+
-                "Jan Nowak HJK234567 18.45\n",list1);
+        assertEquals("Jan Kowalski ABC123456 25.2\n" +
+                "Andrzej Paz EFG345678 15.1\n" +
+                "Jan Nowak HJK234567 18.45\n", list1);
     }
 
     @Test
@@ -512,22 +512,39 @@ public class RentalOfficeTest {
         //when
         //then
         assertEquals("BIKE ID: 2 CLIENT: Andrzej Paz EFG345678 0.0 BORROW DATE: Tue Oct 22 11:24:23 CEST 2019 DATE OF RETURN: null\n" +
-                "BIKE ID: 3 CLIENT: Jan Nowak HJK234567 0.0 BORROW DATE: Tue Oct 22 10:30:23 CEST 2019 DATE OF RETURN: null\n",list1);
+                "BIKE ID: 3 CLIENT: Jan Nowak HJK234567 0.0 BORROW DATE: Tue Oct 22 10:30:23 CEST 2019 DATE OF RETURN: null\n", list1);
 
     }
 
     @Test
     public void saveClientListToFileTest() throws FileNotFoundException {
+        //given
         RentalOffice rentalOffice = new RentalOffice();
         Client client1 = new Client("Jan", "Kowalski", "ABC123456");
         Client client2 = new Client("Andrzej", "Paz", "EFG345678");
         Client client3 = new Client("Jan", "Nowak", "HJK234567");
+
         rentalOffice.addClientToClientList(client1);
         rentalOffice.addClientToClientList(client2);
         rentalOffice.addClientToClientList(client3);
+        rentalOffice.topUpAccount("ABC123456",15.9);
         rentalOffice.saveClientListToFile();
+        //when
+        //then
     }
 
+    @Test
+    public void readClientListFromFile() throws FileNotFoundException {
+        //given
+        RentalOffice rentalOffice = new RentalOffice();
+        //when
+        //then
+        rentalOffice.readClientListFromFile();
+        rentalOffice.printClientList();
+
+
+
+    }
 
 
 }
