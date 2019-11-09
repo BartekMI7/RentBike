@@ -1,0 +1,3 @@
+ABC123456  Kowalski  Jan  15.9
+EFG345678  Paz  Andrzej  0.0
+HJK234567  Nowak  Jan  0.0
