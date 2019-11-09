@@ -4,15 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -269,7 +267,6 @@ public class RentalOffice {
             String lastnameClient = client.getLastName();
             String firstnameClient = client.getFirstName();
             double saldoClient = client.getSaldoClient();
-
             write.print(idClient);
             write.print("  ");
             write.print(lastnameClient);
@@ -282,10 +279,19 @@ public class RentalOffice {
         write.close();
     }
 
-
-    public double getProfits() {
-
-        return 2;
+    public void readClientListFromFile() throws FileNotFoundException {
+        Scanner read = new Scanner(new File("all_clients.txt"));
+        int counter = 0;
+        Client tmp;
+        String idClient = null;
+        String lastnameClient = null;
+        String firstnameClient = null;
+        double saldoClient = 0;
+        while (read.hasNextLine()) {
+            String line = read.nextLine();
+            String[] tab = line.split("  ");
+            clientList.add(new Client(tab[0],tab[1],tab[2],Double.valueOf(tab[3])));
+        }
     }
 
 
