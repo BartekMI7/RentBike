@@ -281,12 +281,6 @@ public class RentalOffice {
 
     public void readClientListFromFile() throws FileNotFoundException {
         Scanner read = new Scanner(new File("all_clients.txt"));
-        int counter = 0;
-        Client tmp;
-        String idClient = null;
-        String lastnameClient = null;
-        String firstnameClient = null;
-        double saldoClient = 0;
         while (read.hasNextLine()) {
             String line = read.nextLine();
             String[] tab = line.split("  ");
