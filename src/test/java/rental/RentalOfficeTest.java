@@ -527,7 +527,7 @@ public class RentalOfficeTest {
         rentalOffice.addClientToClientList(client1);
         rentalOffice.addClientToClientList(client2);
         rentalOffice.addClientToClientList(client3);
-        rentalOffice.topUpAccount("ABC123456",15.9);
+        rentalOffice.topUpAccount("ABC123456", 15.9);
         rentalOffice.saveClientListToFile();
         //when
         //then
@@ -543,7 +543,23 @@ public class RentalOfficeTest {
         rentalOffice.printClientList();
 
 
+    }
 
+    @Test
+    public void saveBikeListToFile() throws FileNotFoundException {
+        //given
+        RentalOffice rentalOffice = new RentalOffice();
+        Bike bike1 = new Bike("1",2018);
+        Bike bike2 = new Bike("2",2018);
+        Bike bike3 = new Bike("3",2019);
+        Bike bike4 = new Bike("4",2019);
+        rentalOffice.addBikeToBikeList(bike1);
+        rentalOffice.addBikeToBikeList(bike2);
+        rentalOffice.addBikeToBikeList(bike3);
+        rentalOffice.addBikeToBikeList(bike4);
+        rentalOffice.saveBikeListToFile();
+        //when
+        //then
     }
 
 

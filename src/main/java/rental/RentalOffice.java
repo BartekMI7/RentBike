@@ -279,6 +279,22 @@ public class RentalOffice {
         write.close();
     }
 
+    public void saveBikeListToFile() throws FileNotFoundException {
+        PrintWriter writer = new PrintWriter("all_bikes.txt");
+        bikeList.forEach(bike -> {
+            String idBike = bike.getIdBikeNr();
+            int year= bike.getDateOfProduction();
+        writer.print(idBike);
+        writer.print("  ");
+        writer.print(year);
+        writer.println();
+        });
+        writer.close();
+
+
+    }
+
+
     public void readClientListFromFile() throws FileNotFoundException {
         Scanner read = new Scanner(new File("all_clients.txt"));
         while (read.hasNextLine()) {
